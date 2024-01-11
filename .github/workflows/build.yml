@@ -15,7 +15,7 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Generate rootfs
-        run: bash ./genrootfs.sh
+        run: /bin/sh ./genrootfs.sh
 
       - uses: actions/upload-artifact@v4
         with:
