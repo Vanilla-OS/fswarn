@@ -1,0 +1,23 @@
+name: FsWarn Build
+
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container:
+      image: docker.io/library/alpine:edge
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Generate rootfs
+        run: ./genrootfs.sh
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: FsWarn-x86_64
+          path: ./fswarn-x86_64.squash

@@ -1,0 +1,24 @@
+name: FsWarn Build
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container:
+      image: docker.io/library/alpine:edge
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Generate rootfs
+        run: ./genrootfs.sh
+
+      - name: Upload release
+        uses: softprops/action-gh-releases@v1
+        with:
+          files: fswarn-x86_64.squash
