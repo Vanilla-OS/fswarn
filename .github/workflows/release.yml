@@ -21,6 +21,6 @@ jobs:
           /bin/sh ./genrootfs.sh
 
       - name: Upload release
-        uses: softprops/action-gh-releases@v1
+        uses: softprops/action-gh-release@v1
         with:
           files: fswarn-x86_64.squash
