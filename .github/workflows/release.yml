@@ -19,9 +19,11 @@ jobs:
         run: |
           apk add xz squashfs-tools
           /bin/sh ./genrootfs.sh
-          tar cvf fswarn.tar.xz fswarn-x86_64.squash
+          tar cvf fswarn-x86_64.tar.xz fswarn-x86_64.squash
+          ARCH=aarch64 /bin/sh ./genrootfs.sh
+          tar cvf fswarn-aarch64.tar.xz fswarn-aarch64.squash
 
       - name: Upload release
         uses: softprops/action-gh-release@v2
         with:
-          files: fswarn.tar.xz
+          files: fswarn*.tar.xz

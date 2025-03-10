@@ -18,8 +18,9 @@ jobs:
         run: |
           apk add xz squashfs-tools
           /bin/sh ./genrootfs.sh
+          ARCH=aarch64 /bin/sh ./genrootfs.sh
 
       - uses: actions/upload-artifact@v4
         with:
-          name: FsWarn-x86_64
-          path: ./fswarn-x86_64.squash
+          name: FsWarn
+          path: ./fswarn*.squash
