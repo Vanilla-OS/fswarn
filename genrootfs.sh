@@ -8,10 +8,10 @@ tmp="$(mktemp -d)"
 trap cleanup EXIT
 chmod 0755 "$tmp"
 
-arch="x86_64"
+arch=${ARCH:-"$(apk --print-arch)"}
 repositories_file=/etc/apk/repositories
-keys_dir=/etc/apk/keys
-outfile="./fswarn-x86_64.squash"
+keys_dir=/usr/share/apk/keys
+outfile="./fswarn-$arch.squash"
 
 packages="alpine-baselayout-data busybox imagemagick gawk bash"
 
@@ -25,12 +25,13 @@ ${APK:-apk} add --keys-dir "$keys_dir" --no-cache \
 	--repositories-file "$repositories_file" \
 	--no-script --root "$tmp" --initdb --arch "$arch" \
 	$packages
-for link in $("$tmp"/bin/busybox --list-full); do
+for link in $(/bin/busybox --list-full); do
 	[ -e "$tmp"/$link ] || ln -s /bin/busybox "$tmp"/$link
 done
 
 ${APK:-apk} fetch --keys-dir "$keys_dir" --no-cache \
-	--repositories-file "$repositories_file" --root "$tmp" \
+	--repositories-file "$repositories_file" \
+	--root "$tmp" --arch "$arch" \
 	--stdout --quiet alpine-release | tar -zx -C "$tmp" etc/
 
 # make sure root login is disabled
