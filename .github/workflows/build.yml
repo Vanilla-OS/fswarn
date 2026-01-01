@@ -20,7 +20,7 @@ jobs:
           /bin/sh ./genrootfs.sh
           ARCH=aarch64 /bin/sh ./genrootfs.sh
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v6
         with:
           name: FsWarn
           path: ./fswarn*.squash
